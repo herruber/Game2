@@ -28,7 +28,10 @@ namespace Game2
                       "~/Scripts/three.js",
                       "~/Scripts/Projector.js",
                       "~/App/Main.js",
-                      "~/App/Global.js"));
+                      "~/App/Global.js",
+                      "~/App/Rendering.js",
+                      "~/App/Listeners.js",
+                      "~/App/ObjectCreator.js"));
 
             bundles.Add(new StyleBundle("~/Content/css").Include(
                       "~/Content/bootstrap.css",

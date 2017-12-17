@@ -3,6 +3,17 @@
     padding-bottom: 20px;
 }
 
+input[type="number"]
+{
+    width:5em;
+}
+
+#build-menu
+{
+    position:absolute;
+    color:white;
+}
+
 /* Set padding to keep content from hitting the edges */
 .body-content {
     padding-left: 15px;

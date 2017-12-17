@@ -39,7 +39,8 @@
             obj.add(cmesh);
 
             global.scene.add(obj);
-            debugger;
+
+            global.lastObject = obj;
         }
 
     })

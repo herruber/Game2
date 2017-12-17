@@ -17,6 +17,7 @@
         this.renderer;
         this.camera;
 
+        this.lastObject; //Last added or edited object , aka target
     })
 
 }())

@@ -2,7 +2,7 @@
 
     var app = angular.module("Game");
 
-    app.service("listeners", function (global, objectCreator) {
+    app.service("listeners", function (global, objectCreator, camcontrols) {
 
         var self = this;
 
@@ -33,7 +33,7 @@
         var rightclick = function(event)
         {
             if (event.shiftKey) {
-                alert("shift was pressed")
+                global.mode = 99; //camera orbit
 
             }
 
@@ -43,13 +43,30 @@
         {
             self.keysDown[event.key] = event.type == 'keydown';
 
-            if (self.keysDown.length > 1) {
-                for (var i = 0; i < self.keysDown.length; i++) {
-                    console.log(self.keysDown[i])
-                }
+            if (event.key == "w" && global.mode == 99) {
+                camcontrols.move(0, 0, -global.camSpeed);
             }
-            
-           
+
+            if (event.key == "a" && global.mode == 99) {
+                camcontrols.move(-global.camSpeed, 0, 0);
+            }
+
+            if (event.key == "s" && global.mode == 99) {
+                camcontrols.move(0, 0, global.camSpeed);
+            }
+
+            if (event.key == "d" && global.mode == 99) {
+                camcontrols.move(global.camSpeed, 0, 0);
+            }
+
+            if (event.key == " " && global.mode == 99) {
+                camcontrols.move(0, global.camSpeed, 0);
+            }
+
+            if (event.ctrlKey && global.mode == 99) {
+                camcontrols.move(0, -global.camSpeed, 0);
+            }
+
 
         }
 
@@ -65,7 +82,8 @@
                 case 0:
                     leftclick(event);
                     break;
-                case 1:                   
+                case 1:
+                    alert("scroll")
                     break;
                 case 2:
                     rightclick(event);
@@ -95,7 +113,14 @@
         {
             global.mouseScreen = new THREE.Vector3(event.clientX, event.clientY, 0);
             global.mouseWorld = mouseWorld(event);
-            console.log("mouseworld = " + global.mouseWorld.toString() + " , mouseScreen = " + global.mouseScreen.toString());
+            
+            switch (global.mode) {
+                case 99: //Camera orbit
+                    camcontrols.rotate();
+                    break;
+                default:
+
+            }
         }
 
         this.initListeners = function()
@@ -103,12 +128,16 @@
 
             //Add listeners to the renderers dom element for accurate window precision
             //Adding to div element will not guarantee that the div is the size of the visible area
-            global.renderer.domElement.addEventListener("mousemove", self.mousemove, false);
-            global.renderer.domElement.addEventListener("mousedown", self.mousedown, false);
-            global.renderer.domElement.addEventListener("mouseup", self.mouseup, false);
 
             document.addEventListener("keydown", self.keydown, false);
             document.addEventListener("keyup", self.keyup, false);
+
+
+            global.renderer.domElement.addEventListener("mousedown", self.mousedown, false);
+            global.renderer.domElement.addEventListener("mouseup", self.mouseup, false);
+
+            global.renderer.domElement.addEventListener("mousemove", self.mousemove, false);
+
         }
 
     })

@@ -31,7 +31,8 @@ namespace Game2
                       "~/App/Global.js",
                       "~/App/Rendering.js",
                       "~/App/Listeners.js",
-                      "~/App/ObjectCreator.js"));
+                      "~/App/ObjectCreator.js",
+                      "~/App/CamControls.js"));
 
             bundles.Add(new StyleBundle("~/Content/css").Include(
                       "~/Content/bootstrap.css",

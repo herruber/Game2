@@ -10,11 +10,17 @@
         <button ng-click="">test</button>
         <br />
         <input type="range" min="-100" max="100" step="0.25" ng-model="depth" ng-change="updatePosZ()" /><input type="number" ng-model="depth" step="0.25" ng-change="updatePosZ()" />
+        <br />
+        <input type="number" ng-model="camSpeed" ng-change="updateCamSpeed()" min="0.01" />
+    </div>
+
+    <div id="build-menu">
+        <h3>Build</h3>
+
+
     </div>
 
     <div id="game-view">
-        <div id="build-menu">
-            hejsan!
-        </div>
+        
     </div>
 </div>

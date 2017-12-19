@@ -5,6 +5,7 @@
     app.service("global", function () {
 
         var self = this;
+        this.objectview = document.getElementById("object-view");
 
         this.gameView = document.getElementById("game-view");
         this.mouseStart;
@@ -16,12 +17,28 @@
 
         this.scene;
         this.renderer;
+        this.rendererFront;
+        this.rendererLeft;
+
+        this.movecam = false;
+
         this.camera;
+
+        this.cameraLeft;
+        this.cameraFront;
+
         this.camSpeed = 0.1;
 
-        this.lastObject; //Last added or edited object , aka target
+        this.Target; //= new THREE.Object3D(); //Last added or edited object , aka target
+        this.testing = "";
 
         this.objLoader = new THREE.OBJLoader();
+
+        this.getTarget = function()
+        {
+            return self.Target;
+        }
+
     })
 
 }())

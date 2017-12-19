@@ -11,6 +11,11 @@
         this.btnsDown = [];
         this.btnsUp = [];
 
+        var leftlickup = function(event)
+        {
+
+        }
+
         var leftclick = function(event)
         {
 
@@ -30,12 +35,15 @@
             }
         }
 
+        var rightclickup = function (event) {
+            event.preventDefault();
+            global.movecam = false;
+        }
+
         var rightclick = function(event)
         {
-            if (event.shiftKey) {
-                global.mode = 99; //camera orbit
-
-            }
+            event.preventDefault();
+            global.movecam = true;
 
         }
 
@@ -43,30 +51,30 @@
         {
             self.keysDown[event.key] = event.type == 'keydown';
 
-            if (event.key == "w" && global.mode == 99) {
-                camcontrols.move(0, 0, -global.camSpeed);
-            }
+            if (global.movecam) {
 
-            if (event.key == "a" && global.mode == 99) {
-                camcontrols.move(-global.camSpeed, 0, 0);
+                switch (event.key) {
+                    case "w":
+                        camcontrols.move(0, 0, -global.camSpeed);
+                        break;
+                    case "a":
+                        camcontrols.move(-global.camSpeed, 0, 0);
+                        break;
+                    case "s":
+                        camcontrols.move(0, 0, global.camSpeed);
+                        break;
+                    case "d":
+                        camcontrols.move(global.camSpeed, 0, 0);
+                        break;
+                    case " ":
+                        camcontrols.move(0, global.camSpeed, 0);
+                        break;
+                    default:
+                        if (event.ctrlKey) {
+                            camcontrols.move(0, -global.camSpeed, 0);
+                        }
+                }
             }
-
-            if (event.key == "s" && global.mode == 99) {
-                camcontrols.move(0, 0, global.camSpeed);
-            }
-
-            if (event.key == "d" && global.mode == 99) {
-                camcontrols.move(global.camSpeed, 0, 0);
-            }
-
-            if (event.key == " " && global.mode == 99) {
-                camcontrols.move(0, global.camSpeed, 0);
-            }
-
-            if (event.ctrlKey && global.mode == 99) {
-                camcontrols.move(0, -global.camSpeed, 0);
-            }
-
 
         }
 
@@ -96,7 +104,19 @@
 
         this.mouseup = function(event)
         {
+            switch (event.button) {
+                case 0:
+                    leftclickup(event);
+                    break;
+                case 1:
+                    alert("scroll")
+                    break;
+                case 2:
+                    rightclickup(event);
+                    break;
+                default:
 
+            }
         }
 
         mouseWorld = function (event) {
@@ -114,13 +134,10 @@
             global.mouseScreen = new THREE.Vector3(event.clientX, event.clientY, 0);
             global.mouseWorld = mouseWorld(event);
             
-            switch (global.mode) {
-                case 99: //Camera orbit
-                    camcontrols.rotate();
-                    break;
-                default:
-
+            if (global.movecam) {
+                camcontrols.rotate();
             }
+
         }
 
         this.initListeners = function()

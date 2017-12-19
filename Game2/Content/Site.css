@@ -1,6 +1,32 @@
 ﻿body {
-    padding-top: 50px;
-    padding-bottom: 20px;
+    /*padding-top: 50px;
+    padding-bottom: 20px;*/
+}
+
+.body-content
+{
+
+}
+
+.main-container
+{
+    display:flex;
+}
+
+#object-view
+{
+
+}
+
+.container
+{
+    padding:8px;
+    margin:0px;
+}
+
+.views
+{
+    padding:4px;
 }
 
 input[type="number"]
@@ -14,16 +40,55 @@ input[type="number"]
     color:black;
 }
 
+#top-row
+{
+    display:flex;
+
+}
+
+#game
+{
+    
+}
+
+.sidebyside
+{
+    display:flex;
+}
+
+input[type="text"]
+{
+    max-width:64px;
+}
+
+#top-menu
+{
+    display:flex;
+}
+
+#object-view
+{
+    display:block;
+    min-height:80%;
+    min-width:12%;
+    background-color:rgba(0, 0, 0, 0.25);
+    /*color:white;*/
+}
+
 #build-menu
 {
-    position:absolute;
-    color:white;
+    display:block;
+    min-height:80%;
+    width:8%;
+    background-color:rgba(0, 0, 0, 0.25);
+    color:black;
+    /*position:absolute;*/
 }
 
 /* Set padding to keep content from hitting the edges */
 .body-content {
-    padding-left: 15px;
-    padding-right: 15px;
+    /*padding-left: 15px;
+    padding-right: 15px;*/
 }
 
 /* Override the default bootstrap behavior where horizontal description lists 

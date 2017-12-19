@@ -3,33 +3,45 @@
     ViewBag.Title = "Index";
 }
 
-<h2>Game, Index</h2>
+@*<h2>Game, Index</h2>*@
 
 <div id="game" ng-app="Game" ng-controller="GameController" ng-init="initRendering()">
-    <div id="menu">
-        <button ng-click="">test</button>
-        <br />
-        <input type="range" min="-100" max="100" step="0.25" ng-model="depth" ng-change="updatePosZ()" /><input type="number" ng-model="depth" step="0.25" ng-change="updatePosZ()" />
-        <br />
-        <input type="number" ng-model="camSpeed" ng-change="updateCamSpeed()" min="0.01" />
-    </div>
+    <div id="top-menu">
+        <button ng-click="createActor()">Actor</button>
 
-    <div id="build-menu">
-        <h3>Build</h3>
-
+        <form method="post" enctype="multipart/form-data">
+            <input type="file" id="files" name="file" multiple>
+            <button ng-click="loadFiles()">Load</button>
+        </form>
 
     </div>
+    <div class="main-container">
 
-    <div id="game-view">
-        
-    </div>
+        <div id="build-menu" class="sidebyside">
+            <h3>Build</h3>
 
-    <form method="post" enctype="multipart/form-data">
-    <div>
-        <input type="file" id="files" name="file" multiple>
+        </div>
+
+
+        <div id="views">
+            <div id="top-row">
+                <div id="view-left" class="views"></div><div id="view-right" class="views"></div>
+            </div>
+
+            <div id="game-view" class="views"></div>
+        </div>
+
+        <div id="object-view">
+            <div id="object-display" ng-show="activeObject">
+                <h4>Object</h4>
+                <input id="object-name" type="text" ng-change="setName()" ng-model="objname" />
+                <br />
+                <text id="object-mesh"></text>
+                <br />
+                <text id="object-material"></text>
+            </div>            
+        </div>
     </div>
-    <div>
-        <button ng-click="loadFiles()">Load</button>
-    </div>
-    </form>
+    
+    
 </div>

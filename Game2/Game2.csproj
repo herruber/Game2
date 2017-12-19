@@ -211,6 +211,10 @@
   <ItemGroup>
     <Content Include="App\CamControls.js" />
     <Content Include="App\Global.js" />
+    <Content Include="App\Html\Menus\mMain.html" />
+    <Content Include="App\Html\Properties\pText.html" />
+    <Content Include="App\Html\Properties\pNumber.html" />
+    <Content Include="App\Html\Properties\pSlider.html" />
     <Content Include="App\Listeners.js" />
     <Content Include="App\Main.js" />
     <Content Include="App\ObjectCreator.js" />
@@ -229,6 +233,9 @@
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="Scripts\angular.min.js.map" />
+    <Content Include="Meshes\monsterbase.obj" />
+    <Content Include="Meshes\nose.obj" />
+    <Content Include="Meshes\testchar3.OBJ" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />

@@ -27,6 +27,7 @@ namespace Game2
                       "~/Scripts/angular.min.js",
                       "~/Scripts/three.js",
                       "~/Scripts/Projector.js",
+                      "~/Scripts/OBJLoader.js",
                       "~/App/Main.js",
                       "~/App/Global.js",
                       "~/App/Rendering.js",

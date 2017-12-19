@@ -6,11 +6,17 @@
 
         $scope.depth = 0.5;
         $scope.camSpeed = 0.1;
+        $scope.filesToLoad = "";
 
         $scope.createActor = function()
         {
             global.mode = 1;
             objectCreator.createActor("test", $scope);
+        }
+
+        $scope.loadFiles = function()
+        {          
+            objectCreator.loadMesh();
         }
 
         $scope.updatePosZ = function()

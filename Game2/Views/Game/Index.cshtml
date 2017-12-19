@@ -23,4 +23,13 @@
     <div id="game-view">
         
     </div>
+
+    <form method="post" enctype="multipart/form-data">
+    <div>
+        <input type="file" id="files" name="file" multiple>
+    </div>
+    <div>
+        <button ng-click="loadFiles()">Load</button>
+    </div>
+    </form>
 </div>

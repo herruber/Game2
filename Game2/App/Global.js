@@ -20,6 +20,8 @@
         this.camSpeed = 0.1;
 
         this.lastObject; //Last added or edited object , aka target
+
+        this.objLoader = new THREE.OBJLoader();
     })
 
 }())

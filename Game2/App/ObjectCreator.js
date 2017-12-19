@@ -6,16 +6,71 @@
 
         var self = this;
 
+        this.uniqueCounter = 0;
 
         global.gameView.ondragover = function (event) { event.preventDefault(); };
 
+        //On drop
         global.gameView.ondrop = function (event) {
             event.preventDefault();
 
             var data = event.dataTransfer.getData("text");
-            event.target.innerText = document.getElementById(data).innerText;
+            //event.target.innerText = document.getElementById(data).innerText;
 
-            alert(document.getElementById(data).innerText)
+            //alert(document.getElementById(data).innerText)
+
+            //WHen dropping a property on the canvas assign it to current actor
+            var elementToDrop = document.getElementById(data);
+
+            var properties = elementToDrop.getElementsByTagName('input');
+            var children = elementToDrop.childNodes;
+
+            var cActor = global.lastObject;
+            //The property object to assign to the actor
+
+            //Push the element to the userdata
+            //TODO!! link properties to controls ex. width, height etc
+            cActor.userData.properties.push(elementToDrop);
+
+            alert(cActor.userData.properties[0] + " " + cActor.userData.properties[0].childElementCount);
+        }
+
+        this.loadMesh = function()
+        {
+
+            var files = document.getElementById("files").files;
+            var reader = new FileReader();
+
+            for (var f = 0; f < files.length; f++) {
+               
+                reader.onload = function()
+                {
+                    var astext = reader.result;
+
+                    var cmesh = global.objLoader.parse(astext);
+                    global.scene.add(cmesh);
+                    var bbox = new THREE.Box3().setFromObject(cmesh);
+
+                    var max = bbox.max.z * 2;
+                    var cam = global.camera;
+
+                    cam.position.set(cam.x, cam.y, 100);
+
+                    alert("loaded a mesh " + max)
+                    debugger;
+                }
+
+                reader.onerror = function()
+                {
+                    alert("an error occured")
+                }
+               
+                reader.readAsText(files[f]);
+
+                
+            }
+
+            
         }
 
         this.createObject = function(geometry, material, name)
@@ -64,7 +119,20 @@
                 actor.name = name;
             }
 
-            alert(actor)
+            var prop =
+                {
+                    properties: [],
+                    controls: []
+                }
+
+            actor.userData = prop;
+
+            global.lastObject = actor;
+
+        }
+
+        this.addProperty = function(data)
+        {
 
         }
 
@@ -94,29 +162,79 @@
                     var div = document.createElement('div');
                     div.id = "menu-container";
 
-                    var op1 = document.createElement('div');
-                    op1.id = op1;
-                    op1.innerText = "test1";
-                    op1.className += "input-type";
+                    //Hold all property types
+                    var properties = 
+                        [
+                            "slider",
+                            "number",
+                        ]
 
-                    var op2 = document.createElement('div');
-                    op2.innerText = "test2";
 
-                    var op3 = document.createElement('div');
-                    op3.innerText = "test3";
+                    
+                    for (var p = 0; p < properties.length; p++) {
 
-                    op1.draggable = true;
+                        //Create the type div, main div for each property
+                        var propertyType = document.createElement('div');
+                        propertyType.id = "op-" + p;
+                        propertyType.innerHTML = properties[p] + "<br>";
+                        propertyType.className += "input-type";
 
-                    op1.ondragstart = function(event)
-                    {
-                        event.dataTransfer.setData("text", event.target.id);
+                        propertyType.draggable = true;
 
+
+                        propertyType.ondragstart = function (event) {
+                            event.dataTransfer.setData("text", event.target.id);
+                        }
+
+                        //Create all input elements
+                        var inputname = document.createElement('input');
+                        var min = document.createElement('input');
+                        var max = document.createElement('input');
+                        var step = document.createElement('input');
+
+                        
+                        inputname.type = "text";
+                        min.type = "number";
+                        max.type = "number";
+                        step.type = "number";
+
+                        inputname.id = "nameInput-" + p
+                        min.id = "minInput-" + p;
+                        max.id = "maxInput-" + p;
+                        step.id = "stepInput-" + p;
+
+                        inputname.name = "inputname";
+                        min.name = "inputmin";
+                        max.name = "inputmax";
+                        step.name = "inputstep";
+
+                        //Create all labels for each input field
+                        var labelname = document.createElement('label');
+                        labelname.innerText = "name: ";
+                        var labelmin = document.createElement('label');
+                        labelmin.innerText = "min: ";
+                        var labelmax = document.createElement('label');
+                        labelmax.innerText = "max: ";
+                        var labelstep = document.createElement('label');
+                        labelstep.innerText = "step: ";
+
+                        //Append each property to each label
+                        labelname.appendChild(inputname);
+                        labelmin.appendChild(min);
+                        labelmax.appendChild(max);
+                        labelstep.appendChild(step)
+
+                        //Add all labels with properties to the main div
+                        propertyType.appendChild(labelname);
+                        propertyType.appendChild(document.createElement("br"));
+                        propertyType.appendChild(labelmin);
+                        propertyType.appendChild(labelmax);
+                        propertyType.appendChild(document.createElement("br"));
+                        propertyType.appendChild(labelstep);
+
+                        div.appendChild(propertyType);
+                        
                     }
-
-
-                    div.appendChild(op1);
-                    div.appendChild(op2);
-                    div.appendChild(op3);
                     
                     document.getElementById("build-menu").appendChild(div);
                     break;

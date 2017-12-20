@@ -1,6 +1,6 @@
 ﻿(function () {
 
-    var app = angular.module("Game", []);
+    var app = angular.module("Game", ['ngSanitize']);
 
     app.controller("GameController", function ($http, $scope, rendering, global, listeners, objectCreator) {
 
@@ -9,6 +9,7 @@
         $scope.filesToLoad = "";
         $scope.activeObject = false;
         $scope.globals = global;
+        $scope.Target;
 
         $scope.objname = "";
 
@@ -17,6 +18,21 @@
                 menu: 0,
                 visible: true
             };
+
+        $scope.arraytest =
+            [
+                "hej",
+                "asd",
+                "dsa",
+                "ffff"
+            ]
+
+        $scope.recreateProperty = function(prop)
+        {
+            alert(prop);
+
+            document.getElementById()
+        }
 
         $scope.getProperties = function()
         {
@@ -54,103 +70,52 @@
             });
         }
 
+        $scope.swapVisibility = function(elem)
+        {
+
+            for (var i = 0; i < elem.children.length; i++) {
+                var cchild = elem.children[i];
+
+                if (cchild.id && cchild.id.indexOf("pvalues") > -1) {
+
+                    if (cchild.style.display == 'none') {
+                        cchild.style.display = 'initial';
+                    }
+                    else {
+                        cchild.style.display = 'none';
+                    }
+                }
+            }
+            
+        }
+
         this.swapMenu = function (menu) {
 
             var menucontainer = document.getElementById("build-menu");
 
-            switch (menu) {
-                case 0: //Create base menu
-                    $scope.menus[0]
-                    break;
-
-                case 1:
-                    var div = document.createElement('div');
-                    div.id = "menu-container";
-
-                    //Hold all property types
-                    var properties =
-                        [
-                            "slider",
-                            "number",
-                        ]
-
-
-
-                    for (var p = 0; p < properties.length; p++) {
-
-                        //Create the type div, main div for each property
-                        var propertyType = document.createElement('div');
-                        propertyType.id = "op-" + p;
-                        propertyType.innerHTML = properties[p] + "<br>";
-                        propertyType.className += "input-type";
-
-                        propertyType.draggable = true;
-
-
-                        propertyType.ondragstart = function (event) {
-                            event.dataTransfer.setData("text", event.target.id);
-                        }
-
-                        //Create all input elements
-                        var inputname = document.createElement('input');
-                        var min = document.createElement('input');
-                        var max = document.createElement('input');
-                        var step = document.createElement('input');
-
-
-                        inputname.type = "text";
-                        min.type = "number";
-                        max.type = "number";
-                        step.type = "number";
-
-                        inputname.id = "nameInput-" + p
-                        min.id = "minInput-" + p;
-                        max.id = "maxInput-" + p;
-                        step.id = "stepInput-" + p;
-
-                        inputname.name = "inputname";
-                        min.name = "inputmin";
-                        max.name = "inputmax";
-                        step.name = "inputstep";
-
-                        //Create all labels for each input field
-                        var labelname = document.createElement('label');
-                        labelname.innerText = "name: ";
-                        var labelmin = document.createElement('label');
-                        labelmin.innerText = "min: ";
-                        var labelmax = document.createElement('label');
-                        labelmax.innerText = "max: ";
-                        var labelstep = document.createElement('label');
-                        labelstep.innerText = "step: ";
-
-                        //Append each property to each label
-                        labelname.appendChild(inputname);
-                        labelmin.appendChild(min);
-                        labelmax.appendChild(max);
-                        labelstep.appendChild(step)
-
-                        //Add all labels with properties to the main div
-                        propertyType.appendChild(labelname);
-                        propertyType.appendChild(document.createElement("br"));
-                        propertyType.appendChild(labelmin);
-                        propertyType.appendChild(labelmax);
-                        propertyType.appendChild(document.createElement("br"));
-                        propertyType.appendChild(labelstep);
-
-                        div.appendChild(propertyType);
-
-                    }
-
-                    document.getElementById("build-menu").appendChild(div);
-                    break;
-                default:
-
-            }
+            
         }
 
         $scope.setName = function()
         {
             global.Target.name = $scope.objname;
+        }
+
+        $scope.getTargetData = function()
+        {
+            debugger;
+            if (global.Target) {
+
+                for (var i = 0; i < global.Target.userData.properties.length; i++) {
+                    console.log(global.Target.userData.properties[i])
+                }
+
+                return global.Target.userData.properties;
+            }
+            else {
+                return [];
+            }
+            
         }
 
         $scope.$watch(function () {
@@ -162,19 +127,19 @@
               function (newVal, oldVal) {
 
                   if (angular.isDefined(newVal)) {
+
                       console.log(newVal)
-                      var name = document.getElementById("object-name");
-                      name.value = global.Target.name;
 
                       if (newVal) {
                           $scope.activeObject = true;
+                          $scope.Target = global.Target;
+                          alert($scope.Target)
                       }
                       else {
                           $scope.activeObject = false;
                       }
                   }                 
-              },
-              true
+              },true
              );
 
         $scope.createActor = function()

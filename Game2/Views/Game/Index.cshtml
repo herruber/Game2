@@ -39,6 +39,15 @@
                 <text id="object-mesh"></text>
                 <br />
                 <text id="object-material"></text>
+                <hr />
+                <div id="object-display-properties">
+                    <h5>Properties</h5>
+                    <br />
+                                         
+                    <div ng-repeat="property in Target.userData.properties track by $index">{{recreateProperty(property)}}</div>
+                    
+                    
+                </div>
             </div>            
         </div>
     </div>

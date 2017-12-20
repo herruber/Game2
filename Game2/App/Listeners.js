@@ -76,6 +76,15 @@
                 }
             }
 
+            switch (event.key) {
+                case "1":
+                    var test = global.Target.userData.properties[0];
+                    debugger;
+                    break;
+                default:
+
+            }
+
         }
 
         this.keyup = function(event)

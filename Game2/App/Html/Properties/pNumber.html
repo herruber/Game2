@@ -1,10 +1,13 @@
-﻿<div id="pNumber" draggable="true" ondragstart="{ event.dataTransfer.setData('text', event.target.id);}">
+﻿<div id="pNumber" draggable="true" onclick="angular.element(this).scope().swapVisibility(this)" ondragstart="{ event.dataTransfer.setData('text', event.target.id);}">
     <h4>Number</h4>
-    name: <input type="text" id="name" />
-    <br />
-    min: <input type="number" id="min" /> max: <input type="number" id="max" /> 
-    <br />
-    step: <input type="number" id="step" />
+
+    <div id="pvalues" class="display-none">
+        name: <input type="text" id="pname" />
+        <br />
+        min: <input type="number" id="pmin" /> max: <input type="number" id="pmax" />
+        <br />
+        step: <input type="number" id="pstep" />
+    </div>
 
     <div id="content" hidden>
         <input type="number" />

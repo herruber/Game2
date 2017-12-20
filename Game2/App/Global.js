@@ -39,6 +39,11 @@
             return self.Target;
         }
 
+        this.getAllElements = function(element)
+        {
+            return element.getElementsByTagName("*");
+        }
+
     })
 
 }())

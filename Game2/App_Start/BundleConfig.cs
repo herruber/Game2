@@ -25,6 +25,7 @@ namespace Game2
 
             bundles.Add(new ScriptBundle("~/bundles/js").Include(
                       "~/Scripts/angular.min.js",
+                      "~/Scripts/angular-sanitize.min.js",
                       "~/Scripts/three.js",
                       "~/Scripts/Projector.js",
                       "~/Scripts/OBJLoader.js",

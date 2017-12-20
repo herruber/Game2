@@ -25,16 +25,40 @@
             var elementToDrop = document.getElementById(data);
 
             var properties = elementToDrop.getElementsByTagName('input');
-            var children = elementToDrop.childNodes;
-
-            var ccActor = global.Target;
+            var children = elementToDrop.children;
             //The property object to assign to the actor
 
             //Push the element to the userdata
             //TODO!! link properties to controls ex. width, height etc
-            ccActor.userData.properties.push(elementToDrop);
 
-            alert(ccActor.userData.properties[0] + " " + ccActor.userData.properties[0].childElementCount);
+            var clone = document.getElementById(data).cloneNode(true);
+
+            //Create unique ids for the clone
+            var elems = clone.getElementsByTagName("*")
+            
+            for (var i = 0; i < elems.length; i++) {
+                var currentchild = elems[i];
+
+                if (currentchild.id) {
+                    currentchild.id += self.uniqueCounter;
+                }
+            }
+
+            if (clone.id) {
+                clone.id += self.uniqueCounter;
+                self.uniqueCounter++;
+            }
+
+            //alert(clone)
+            //Add to current actors properties
+            var bajs = clone.outerHTML;
+            global.Target.userData.properties.push(clone.outerHTML);
+            alert(clone)
+
+            //Add to properties ui
+            //document.getElementById("object-display-properties").appendChild(clone);
+
+            
         }
 
         this.loadNextMesh = function(files)
@@ -124,12 +148,19 @@
 
         this.createActor = function () {
             var cBajsen = new THREE.Object3D();
-            cBajsen.userData =
-                {
-                    properties: []
-                }
-            global.Target = cBajsen;
 
+            var prop =
+                {
+                    properties: [
+                        "hej",
+                    "adasd",
+                    "aaaaa"]
+                }
+            cBajsen.userData = prop;
+
+            global.Target = cBajsen;
+            global.scene.add(cBajsen);
+            alert(global.Target.userData.properties)
         }
 
         this.addProperty = function(data)

@@ -8,6 +8,11 @@
 
 }
 
+.display-none
+{
+    display:none;
+}
+
 .main-container
 {
     display:flex;

@@ -11,7 +11,7 @@
         this.btnsDown = [];
         this.btnsUp = [];
 
-        var leftlickup = function(event)
+        var leftclickup = function(event)
         {
 
         }

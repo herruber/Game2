@@ -7,6 +7,8 @@
         var self = this;
 
         this.uniqueCounter = 0;
+        var filecounter = 0;
+
 
         global.gameView.ondragover = function (event) { event.preventDefault(); };
 
@@ -35,16 +37,12 @@
             alert(ccActor.userData.properties[0] + " " + ccActor.userData.properties[0].childElementCount);
         }
 
-        this.loadMesh = function()
+        this.loadNextMesh = function(files)
         {
-
-            var files = document.getElementById("files").files;
             var reader = new FileReader();
 
-            for (var f = 0; f < files.length; f++) {
-               
-                reader.onload = function()
-                {
+            if (filecounter < files.length) {
+                reader.onload = function () {
                     var astext = reader.result;
                     var material = new THREE.MeshBasicMaterial({ color: 'yellow', side: THREE.DoubleSide });
                     var cmesh = global.objLoader.parse(astext);
@@ -52,23 +50,38 @@
                     for (var c = 0; c < cmesh.children.length; c++) {
                         cmesh.children[c].material = material;
                     }
+
                     cmesh.userData =
                 {
                     properties: []
                 }
                     global.scene.add(cmesh);
-                    document.getElementById("files").value = "";
+
                     global.Target = cmesh;
-                    alert("load button")
+
+                    filecounter++;
+
+                    if (filecounter < files.length) {
+                        self.loadNextMesh(files);
+                    }
+                    else {
+                        document.getElementById("files").value = "";
+                    }
                 }
 
-                reader.onerror = function()
-                {
+                reader.onerror = function () {
                     alert("an error occured")
                 }
-               
-                reader.readAsText(files[f]);            
+
+                reader.readAsText(files[filecounter]);
             }
+        }
+
+        this.loadMesh = function()
+        {
+            filecounter = 0;
+            var files = document.getElementById("files").files;
+            self.loadNextMesh(files);
 
         }
 

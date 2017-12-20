@@ -155,7 +155,7 @@
 
         $scope.$watch(function () {
 
-            if (angular.isDefined(global)) {
+            if (angular.isDefined(global) && global.Target) {
                 return global.getTarget().uuid;
             }
         },

@@ -41,8 +41,13 @@
             global.camera = new THREE.PerspectiveCamera(75, width/height, 0.1, 1000);
             global.camera.position.z = 5;
 
-            global.cameraLeft = global.cameraFront = new THREE.OrthographicCamera(hwidth / -2, hwidth / 2, hheight / 2, hheight / -2, 1, 1000);            
-            global.cameraLeft.position.z = global.cameraFront.position.z = 5;
+            var d = 40; //Ortographic size
+            global.cameraLeft = new THREE.OrthographicCamera(hwidth / -d, hwidth / d, hheight / d, hheight / -d, 1, 1000);
+            global.cameraFront = new THREE.OrthographicCamera(hwidth / -d, hwidth / d, hheight / d, hheight / -d, 1, 1000);
+            global.cameraLeft.position.x = 5;
+            global.cameraLeft.position.y = 2;
+            global.cameraLeft.lookAt(0, 0, 0);
+            global.cameraFront.position.z = 5;
 
             global.renderer = new THREE.WebGLRenderer();
             global.rendererFront = new THREE.WebGLRenderer();
